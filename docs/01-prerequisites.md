@@ -17,4 +17,4 @@ DNS Add-on - coredns
 
 > Enable `synchronize-panes`: `ctrl+b` then `shift :`. Then type `set synchronize-panes on` at the prompt. To disable synchronization: `set synchronize-panes off`.
 
-Next: [Installing the Client Tools](02-client-tools.md)
+Next: [Installing the Client Tools](02-compute-resources.md)
