@@ -13,7 +13,7 @@ DNS Add-on - coredns
 
 > The use of tmux is optional and not required to complete this tutorial.
 
-![tmux screenshot](images/tmux-screenshot.png)
+![tmux screenshot](https://raw.githubusercontent.com/mmumshad/kubernetes-the-hard-way/master/docs/images/tmux-screenshot.png)
 
 > Enable `synchronize-panes`: `ctrl+b` then `shift :`. Then type `set synchronize-panes on` at the prompt. To disable synchronization: `set synchronize-panes off`.
 
