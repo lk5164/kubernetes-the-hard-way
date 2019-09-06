@@ -42,6 +42,9 @@
 
 ## Troubleshooting Tips
 
-If you have vCenter installed, you can create vms via template. However, you may get issue if try to create a vm with docker installed. I would recommend creating a vm template before Docker installed. 
+If you have vCenter installed, you can create vms via templates. However, you may get issue if try to create a vm with docker installed. I would recommend creating a vm template before Docker installed. 
 
 If any of the VMs failed to provision, or is not configured correct, delete the vm and recreate from template
+
+Next: [Installing the Client Tools](03-client-tools.md)
+
