@@ -13,7 +13,7 @@ kubectl -n kube-system create configmap nodes-config --from-file=kubelet=kubelet
 
 Edit node to use the dynamically created configuration
 ```
-kubectl edit worker-2
+kubectl edit kube-worker1
 ```
 
 Configure Kubelet Service
