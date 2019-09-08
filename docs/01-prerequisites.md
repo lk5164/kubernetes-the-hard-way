@@ -1,7 +1,13 @@
 # Prerequisites
 Esxi: 6.7 U2
 	
-Operating System: Ubuntu 18.04 LTS (VMs on top of VMware ESXi)
+Operating System:
+
+    No LSB modules are available.
+    Distributor ID:	Ubuntu
+    Description:	Ubuntu 18.04.2 LTS
+    Release:	18.04
+    Codename:	bionic
 
 Networking solution: Weave Net
 
