@@ -41,7 +41,6 @@ Kubernetes The Hard Way guides you through bootstrapping a highly available Kube
 * [Bootstrapping the Kubernetes Control Plane](docs/08-bootstrapping-kubernetes-controllers.md)
 * [Bootstrapping the Kubernetes Worker Nodes](docs/09-bootstrapping-kubernetes-workers.md)
 * [TLS Bootstrapping the Kubernetes Worker Nodes](docs/10-tls-bootstrapping-kubernetes-workers.md)
-* [Configuring kubectl for Remote Access](docs/11-configuring-kubectl.md)
 * [Deploy Weave - Pod Networking Solution](docs/12-configure-pod-networking.md)
 * [Kube API Server to Kubelet Configuration](docs/13-kube-apiserver-to-kubelet.md)
 * [Deploying the DNS Cluster Add-on](docs/14-dns-addon.md)

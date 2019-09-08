@@ -66,7 +66,7 @@ admin.key
 admin.crt
 ```
 
-## The Admin Kubernetes Configuration File
+### The Admin Kubernetes Configuration File
 The admin.crt and admin.key file gives you administrative access. We are configuring these to be used with the kubectl tool to perform administrative functions on kubernetes.
 
 Each kubeconfig requires a Kubernetes API Server to connect to. To support high availability the IP address assigned to the external load balancer fronting the Kubernetes API Servers will be used.
@@ -94,7 +94,13 @@ Generate a kubeconfig file suitable for authenticating as the `admin` user:
 }
 ```
 
-## Verification
+Results
+
+```
+admin.kubeconfig
+```
+
+### Verification
 
 Check the health of the remote Kubernetes cluster:
 
@@ -107,7 +113,7 @@ Client Version: version.Info{Major:"1", Minor:"13", GitVersion:"v1.13.0", GitCom
 Client Version: version.Info{Major:"1", Minor:"13", GitVersion:"v1.13.0", GitCommit:"ddf47ac13c1a9483ea035a79cd7c10005ff21a6d", GitTreeState:"clean", BuildDate:"2018-12-03T21:04:45Z", GoVersion:"go1.11.2", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
-## Distribute Admin Config Files To All Nodes
+### Distribute Admin Config Files To All Nodes
 
 ```
 for instance in `cat controllers && cat workers`

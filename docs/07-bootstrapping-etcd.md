@@ -42,13 +42,7 @@ Extract and install the `etcd` server and the `etcdctl` command line utility:
 The instance internal IP address will be used to serve client requests and communicate with etcd cluster peers. Retrieve the internal IP address of the master(etcd) nodes:
 
 ```
-INTERNAL_IP=$(ip addr show enp0s8 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
-```
-
-Each etcd member must have a unique name within an etcd cluster. Set the etcd name to match the hostname of the current compute instance:
-
-```
-ETCD_NAME=$(hostname -s)
+INTERNAL_IP=$(ip addr show ens160 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
 ```
 
 Create the `etcd.service` systemd unit file:
@@ -61,7 +55,7 @@ Documentation=https://github.com/coreos
 
 [Service]
 ExecStart=/usr/local/bin/etcd \\
-  --name ${ETCD_NAME} \\
+  --name 192.168.1.25 \\
   --cert-file=/etc/etcd/etcd-server.crt \\
   --key-file=/etc/etcd/etcd-server.key \\
   --peer-cert-file=/etc/etcd/etcd-server.crt \\
@@ -96,7 +90,7 @@ EOF
 }
 ```
 
-> Remember to run the above commands on each controller node: `master-1`, and `master-2`.
+> Remember to run the above commands on each controller node: `kube-controller0`, and `kube-controller1`.
 
 ## Verification
 
