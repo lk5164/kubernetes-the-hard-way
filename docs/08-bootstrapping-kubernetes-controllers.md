@@ -209,62 +209,30 @@ etcd-1               Healthy   {"health": "true"}
 
 > Remember to run the above commands on each controller node: `kube-controller0`, and `kube-controller1`.
 
-## The Kubernetes Frontend Load Balancer
-
-In this section you will provision an external load balancer to front the Kubernetes API Servers. The `kubernetes-the-hard-way` static IP address will be attached to the resulting load balancer.
-
-
-### Provision a Network Load Balancer
+```
+sudo systemctl status kube-apiserver.service
+```
 
 ```
-#Install HAProxy
-loadbalancer# sudo apt-get update && sudo apt-get install -y haproxy
 
 ```
 
 ```
-loadbalancer# cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg 
-frontend kubernetes
-    bind 192.168.1.24:6443
-    option tcplog
-    mode tcp
-    default_backend kubernetes-master-nodes
-
-backend kubernetes-master-nodes
-    mode tcp
-    balance roundrobin
-    option tcp-check
-    server kube-controller0 192.168.1.25:6443 check fall 3 rise 2
-    server kube-controller1 192.168.1.17:6443 check fall 3 rise 2
-EOF
+sudo systemctl status kube-controller-manager.service
 ```
 
 ```
-loadbalancer# sudo service haproxy restart
-```
-
-### Verification
-
-Make a HTTP request for the Kubernetes version info:
 
 ```
-curl  https://192.168.1.24:6443/version -k
-```
-
-> output
 
 ```
-{
-  "major": "1",
-  "minor": "13",
-  "gitVersion": "v1.13.0",
-  "gitCommit": "ddf47ac13c1a9483ea035a79cd7c10005ff21a6d",
-  "gitTreeState": "clean",
-  "buildDate": "2018-12-03T20:56:12Z",
-  "goVersion": "go1.11.2",
-  "compiler": "gc",
-  "platform": "linux/amd64"
-}
+sudo systemctl status kube-scheduler.service
 ```
+
+```
+
+```
+
+Using systemctl to check service status is critical. You need to make sure there is no error in the log. Sometimes, even the service status is available, there are still problems that causes fatal error.
 
 Next: [Bootstrapping the Kubernetes Worker Nodes](09-bootstrapping-kubernetes-workers.md)
