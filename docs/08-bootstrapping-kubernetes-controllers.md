@@ -214,6 +214,24 @@ sudo systemctl status kube-apiserver.service
 ```
 
 ```
+● kube-apiserver.service - Kubernetes API Server
+   Loaded: loaded (/etc/systemd/system/kube-apiserver.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2019-09-08 09:04:44 EDT; 8h ago
+     Docs: https://github.com/kubernetes/kubernetes
+ Main PID: 977 (kube-apiserver)
+    Tasks: 8 (limit: 4675)
+   CGroup: /system.slice/kube-apiserver.service
+           └─977 /usr/local/bin/kube-apiserver --advertise-address=192.168.1.25 --allow-privileged=true --apiserver-count=3 --audit-log-maxage=30 --audit-log-maxbackup=3 --audit-log-maxsize=100 --audit-log-path=/var/log/audit.log --authorization-mode=Node,RBAC --bind-address=0.0.0.0 --client-ca-file=/var/lib/kubernetes/ca.crt --enable-admission-plugins=NodeRestriction,ServiceAccount --enable-swagger-ui=true --enable-bootstrap-token-auth=true --etcd-cafile=/var/lib/kubernetes/ca.crt --etcd-certfile=/var/lib/kubernetes/etcd-server.crt --etcd-keyfile=/var/lib/kubernetes/etcd-server.key   --etcd-servers=https://192.168.1.25:2379,https://192.168.1.17:2379   --event-ttl=1h   --encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml   --kubelet-certificate-authority=/var/lib/kubernetes/ca.crt   --kubelet-client-certificate=/var/lib/kubernetes/kube-apiserver.crt   --kubelet-client-key=/var/lib/kubernetes/kube-apiserver.key   --kubelet-https=true   --runtime-config=api/all   --service-account-key-file=/var/lib/kubernetes/service-account.crt   --service-cluster-ip-range=10.96.0.0/24   --service-node-port-range=30000-32767   --tls-cert-file=/var/lib/kubernetes/kube-apiserver.crt   --tls-private-key-file=/var/lib/kubernetes/kube-apiserver.key   --v=2   --storage-backend=etcd3   --storage-media-type=application/json
+Sep 08 09:06:22 kube-controller0 kube-apiserver[977]: I0908 09:06:22.296676     977 trace.go:76] Trace[1747160357]: "Patch /api/v1/nodes/hadoop-slave4/status" (started: 2019-09-08 09:06:21.509817826 -0400 EDT m=+95.479646800) (total time: 786.839583ms):
+Sep 08 09:06:22 kube-controller0 kube-apiserver[977]: Trace[1747160357]: [786.795641ms] [786.209359ms] Object stored in database
+Sep 08 09:21:19 kube-controller0 kube-apiserver[977]: I0908 09:21:19.703040     977 trace.go:76] Trace[1598666566]: "GuaranteedUpdate etcd3: *core.Endpoints" (started: 2019-09-08 09:21:19.13040613 -0400 EDT m=+993.100235114) (total time: 572.566959ms):
+Sep 08 09:21:19 kube-controller0 kube-apiserver[977]: Trace[1598666566]: [572.482621ms] [572.259493ms] Transaction committed
+Sep 08 09:21:19 kube-controller0 kube-apiserver[977]: I0908 09:21:19.704118     977 trace.go:76] Trace[35931933]: "Update /api/v1/namespaces/kube-system/endpoints/kube-scheduler" (started: 2019-09-08 09:21:19.130285093 -0400 EDT m=+993.100114117) (total time: 573.773508ms):
+Sep 08 09:21:19 kube-controller0 kube-apiserver[977]: Trace[35931933]: [573.675615ms] [573.588011ms] Object stored in database
+Sep 08 10:25:29 kube-controller0 kube-apiserver[977]: I0908 10:25:29.077577     977 trace.go:76] Trace[2144310406]: "GuaranteedUpdate etcd3: *core.Endpoints" (started: 2019-09-08 10:25:28.535285904 -0400 EDT m=+4842.505114898) (total time: 542.211809ms):
+Sep 08 10:25:29 kube-controller0 kube-apiserver[977]: Trace[2144310406]: [542.150524ms] [541.740918ms] Transaction committed
+Sep 08 10:25:29 kube-controller0 kube-apiserver[977]: I0908 10:25:29.078265     977 trace.go:76] Trace[201963089]: "Update /api/v1/namespaces/kube-system/endpoints/kube-scheduler" (started: 2019-09-08 10:25:28.535157675 -0400 EDT m=+4842.504986679) (total time: 543.087004ms):
+Sep 08 10:25:29 kube-controller0 kube-apiserver[977]: Trace[201963089]: [543.01548ms] [542.946952ms] Object stored in database
 
 ```
 
@@ -222,7 +240,25 @@ sudo systemctl status kube-controller-manager.service
 ```
 
 ```
+● kube-controller-manager.service - Kubernetes Controller Manager
+   Loaded: loaded (/etc/systemd/system/kube-controller-manager.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2019-09-08 09:04:44 EDT; 8h ago
+     Docs: https://github.com/kubernetes/kubernetes
+ Main PID: 960 (kube-controller)
+    Tasks: 7 (limit: 4675)
+   CGroup: /system.slice/kube-controller-manager.service
+           └─960 /usr/local/bin/kube-controller-manager --address=0.0.0.0 --cluster-cidr=192.168.1.0/24 --cluster-name=kubernetes --cluster-signing-cert-file=/var/lib/kubernetes/ca.crt --cluster-signing-key-file=/var/lib/kubernetes/ca.key --kubeconfig=/var/lib/kubernetes/kube-controller-manager.kubeconfig --leader-elect=true --root-ca-file=/var/lib/kubernetes/ca.crt --service-account-private-key-file=/var/lib/kubernetes/service-account.key --service-cluster-ip-range=10.96.0.0/24 --use-service-account-credentials=true --v=2
 
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.654531     960 cleaner.go:141] Cleaning CSR "csr-gjk85" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.659545     960 cleaner.go:166] Cleaning CSR "csr-9czs9" as it is more than 1h0m0s old and approved.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.665541     960 cleaner.go:141] Cleaning CSR "csr-h25jn" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.670250     960 cleaner.go:141] Cleaning CSR "csr-w2wjh" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.675208     960 cleaner.go:141] Cleaning CSR "csr-xcpn6" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.679986     960 cleaner.go:141] Cleaning CSR "csr-f72mn" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.684851     960 cleaner.go:141] Cleaning CSR "csr-2pjhm" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.692905     960 cleaner.go:141] Cleaning CSR "csr-2z5lp" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.698029     960 cleaner.go:141] Cleaning CSR "csr-pswkz" as it is more than 24h0m0s old and unhandled.
+Sep 08 10:05:48 kube-controller0 kube-controller-manager[960]: I0908 10:05:48.702861     960 cleaner.go:141] Cleaning CSR "csr-chjgf" as it is more than 24h0m0s old and unhandled.
 ```
 
 ```
@@ -230,7 +266,25 @@ sudo systemctl status kube-scheduler.service
 ```
 
 ```
+● kube-scheduler.service - Kubernetes Scheduler
+   Loaded: loaded (/etc/systemd/system/kube-scheduler.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2019-09-08 09:04:48 EDT; 8h ago
+     Docs: https://github.com/kubernetes/kubernetes
+ Main PID: 1189 (kube-scheduler)
+    Tasks: 8 (limit: 4675)
+   CGroup: /system.slice/kube-scheduler.service
+           └─1189 /usr/local/bin/kube-scheduler --kubeconfig=/var/lib/kubernetes/kube-scheduler.kubeconfig --address=127.0.0.1 --leader-elect=true --v=2
 
+Sep 08 09:05:27 kube-controller0 kube-scheduler[1189]: E0908 09:05:27.682274    1189 reflector.go:134] k8s.io/client-go/informers/factory.go:132: Failed to list *v1.Node: nodes is forbidden: User "system:kube-scheduler" cannot list resource "nodes" in API group "" at the cluster scope
+Sep 08 09:05:27 kube-controller0 kube-scheduler[1189]: E0908 09:05:27.682313    1189 reflector.go:134] k8s.io/client-go/informers/factory.go:132: Failed to list *v1.Service: services is forbidden: User "system:kube-scheduler" cannot list resource "services" in API group "" at the cluster scope
+Sep 08 09:05:27 kube-controller0 kube-scheduler[1189]: E0908 09:05:27.682352    1189 reflector.go:134] k8s.io/kubernetes/cmd/kube-scheduler/app/server.go:232: Failed to list *v1.Pod: pods is forbidden: User "system:kube-scheduler" cannot list resource "pods" in API group "" at the cluster scope
+Sep 08 09:05:27 kube-controller0 kube-scheduler[1189]: E0908 09:05:27.682397    1189 reflector.go:134] k8s.io/client-go/informers/factory.go:132: Failed to list *v1.ReplicationController: replicationcontrollers is forbidden: User "system:kube-scheduler" cannot list resource "replicationcontrollers" in API group "" at the cluster scope
+Sep 08 09:05:27 kube-controller0 kube-scheduler[1189]: E0908 09:05:27.682451    1189 reflector.go:134] k8s.io/client-go/informers/factory.go:132: Failed to list *v1.StorageClass: storageclasses.storage.k8s.io is forbidden: User "system:kube-scheduler" cannot list resource "storageclasses" in API group "storage.k8s.io" at the cluster scope
+Sep 08 09:05:27 kube-controller0 kube-scheduler[1189]: E0908 09:05:27.682487    1189 reflector.go:134] k8s.io/client-go/informers/factory.go:132: Failed to list *v1.PersistentVolume: persistentvolumes is forbidden: User "system:kube-scheduler" cannot list resource "persistentvolumes" in API group "" at the cluster scope
+Sep 08 09:05:29 kube-controller0 kube-scheduler[1189]: I0908 09:05:29.808847    1189 controller_utils.go:1027] Waiting for caches to sync for scheduler controller
+Sep 08 09:05:29 kube-controller0 kube-scheduler[1189]: I0908 09:05:29.908986    1189 controller_utils.go:1034] Caches are synced for scheduler controller
+Sep 08 09:05:29 kube-controller0 kube-scheduler[1189]: I0908 09:05:29.909024    1189 leaderelection.go:205] attempting to acquire leader lease  kube-system/kube-scheduler...
+Sep 08 09:05:45 kube-controller0 kube-scheduler[1189]: I0908 09:05:45.315564    1189 leaderelection.go:214] successfully acquired lease kube-system/kube-scheduler
 ```
 
 Using systemctl to check service status is critical. You need to make sure there is no error in the log. Sometimes, even the service status is available, there are still problems that causes fatal error.
