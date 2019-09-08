@@ -4,7 +4,7 @@ In this lab you will bootstrap the Kubernetes control plane across 2 compute ins
 
 ## Prerequisites
 
-The commands in this lab must be run on each controller instance: `master-1`, and `master-2`. Login to each controller instance using SSH Terminal. Example:
+The commands in this lab must be run on each controller instance: `kube-controller0`, and `kube-controller1`. Login to each controller instance using SSH Terminal. Example:
 
 ### Running commands in parallel with tmux
 
@@ -55,7 +55,7 @@ Install the Kubernetes binaries:
 The instance internal IP address will be used to advertise the API Server to members of the cluster. Retrieve the internal IP address for the current compute instance:
 
 ```
-INTERNAL_IP=$(ip addr show enp0s8 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
+INTERNAL_IP=$(ip addr show ens160 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
 ```
 
 Verify it is set
@@ -196,7 +196,7 @@ EOF
 ### Verification
 
 ```
-kubectl get componentstatuses --kubeconfig admin.kubeconfig
+kubectl get componentstatuses
 ```
 
 ```
@@ -207,7 +207,7 @@ etcd-0               Healthy   {"health": "true"}
 etcd-1               Healthy   {"health": "true"}
 ```
 
-> Remember to run the above commands on each controller node: `master-1`, and `master-2`.
+> Remember to run the above commands on each controller node: `kube-controller0`, and `kube-controller1`.
 
 ## The Kubernetes Frontend Load Balancer
 
@@ -225,7 +225,7 @@ loadbalancer# sudo apt-get update && sudo apt-get install -y haproxy
 ```
 loadbalancer# cat <<EOF | sudo tee /etc/haproxy/haproxy.cfg 
 frontend kubernetes
-    bind 192.168.5.30:6443
+    bind 192.168.1.24:6443
     option tcplog
     mode tcp
     default_backend kubernetes-master-nodes
@@ -234,8 +234,8 @@ backend kubernetes-master-nodes
     mode tcp
     balance roundrobin
     option tcp-check
-    server master-1 192.168.5.11:6443 check fall 3 rise 2
-    server master-2 192.168.5.12:6443 check fall 3 rise 2
+    server kube-controller0 192.168.1.25:6443 check fall 3 rise 2
+    server kube-controller1 192.168.1.17:6443 check fall 3 rise 2
 EOF
 ```
 
@@ -248,7 +248,7 @@ loadbalancer# sudo service haproxy restart
 Make a HTTP request for the Kubernetes version info:
 
 ```
-curl  https://192.168.5.30:6443/version -k
+curl  https://192.168.1.24:6443/version -k
 ```
 
 > output

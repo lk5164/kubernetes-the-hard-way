@@ -8,7 +8,7 @@ We will now install the kubernetes components
 
 ## Prerequisites
 
-The commands in this lab must be run on first worker instance: `worker-1`. Login to first worker instance using SSH Terminal.
+The commands in this lab must be run on first worker instance: `192.168.1.23`. Login to first worker instance using SSH Terminal.
 
 ### Provisioning  Kubelet Client Certificates
 
@@ -19,7 +19,7 @@ Generate a certificate and private key for one worker node:
 Worker1:
 
 ```
-master-1$ cat > openssl-worker-1.cnf <<EOF
+192.168.1.23$ cat > openssl-192.168.1.23.cnf <<EOF
 [req]
 req_extensions = v3_req
 distinguished_name = req_distinguished_name
@@ -29,20 +29,20 @@ basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName = @alt_names
 [alt_names]
-DNS.1 = worker-1
-IP.1 = 192.168.5.21
+DNS.1 = kube-worker0
+IP.1 = 192.168.1.23
 EOF
 
-openssl genrsa -out worker-1.key 2048
-openssl req -new -key worker-1.key -subj "/CN=system:node:worker-1/O=system:nodes" -out worker-1.csr -config openssl-worker-1.cnf
-openssl x509 -req -in worker-1.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out worker-1.crt -extensions v3_req -extfile openssl-worker-1.cnf -days 1000
+openssl genrsa -out 192.168.1.23.key 2048
+openssl req -new -key 192.168.1.23.key -subj "/CN=system:node:192.168.1.23/O=system:nodes" -out 192.168.1.23.csr -config openssl-192.168.1.23.cnf
+openssl x509 -req -in 192.168.1.23.csr -CA ca.crt -CAkey ca.key -CAcreateserial  -out 192.168.1.23.crt -extensions v3_req -extfile openssl-192.168.1.23.cnf -days 1000
 ```
 
 Results:
 
 ```
-worker-1.key
-worker-1.crt
+192.168.1.23.key
+192.168.1.23.crt
 ```
 
 ### The kubelet Kubernetes Configuration File
@@ -62,41 +62,41 @@ Generate a kubeconfig file for the first worker node:
     --certificate-authority=ca.crt \
     --embed-certs=true \
     --server=https://${LOADBALANCER_ADDRESS}:6443 \
-    --kubeconfig=worker-1.kubeconfig
+    --kubeconfig=192.168.1.23.kubeconfig
 
-  kubectl config set-credentials system:node:worker-1 \
-    --client-certificate=worker-1.crt \
-    --client-key=worker-1.key \
+  kubectl config set-credentials system:node:192.168.1.23 \
+    --client-certificate=192.168.1.23.crt \
+    --client-key=192.168.1.23.key \
     --embed-certs=true \
-    --kubeconfig=worker-1.kubeconfig
+    --kubeconfig=192.168.1.23.kubeconfig
 
   kubectl config set-context default \
     --cluster=kubernetes-the-hard-way \
-    --user=system:node:worker-1 \
-    --kubeconfig=worker-1.kubeconfig
+    --user=system:node:192.168.1.23 \
+    --kubeconfig=192.168.1.23.kubeconfig
 
-  kubectl config use-context default --kubeconfig=worker-1.kubeconfig
+  kubectl config use-context default --kubeconfig=192.168.1.23.kubeconfig
 }
 ```
 
 Results:
 
 ```
-worker-1.kubeconfig
+192.168.1.23.kubeconfig
 ```
 
 ### Copy certificates, private keys and kubeconfig files to the worker node:
 
 ```
-master-1$ scp ca.crt worker-1.crt worker-1.key worker-1.kubeconfig worker-1:~/
+master-1$ scp ca.crt 192.168.1.23.crt 192.168.1.23.key 192.168.1.23.kubeconfig 192.168.1.23:~/
 ```
 
 ### Download and Install Worker Binaries
 
-Going forward all activities are to be done on the `worker-1` node.
+Going forward all activities are to be done on the `192.168.1.23` node.
 
 ```
-worker-1$ wget -q --show-progress --https-only --timestamping \
+192.168.1.23$ wget -q --show-progress --https-only --timestamping \
   https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubectl \
   https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kube-proxy \
   https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubelet
@@ -105,7 +105,7 @@ worker-1$ wget -q --show-progress --https-only --timestamping \
 Create the installation directories:
 
 ```
-worker-1$ sudo mkdir -p \
+192.168.1.23$ sudo mkdir -p \
   /etc/cni/net.d \
   /opt/cni/bin \
   /var/lib/kubelet \
@@ -136,7 +136,7 @@ Install the worker binaries:
 Create the `kubelet-config.yaml` configuration file:
 
 ```
-worker-1$ cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
+192.168.1.23$ cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 authentication:
@@ -161,7 +161,7 @@ EOF
 Create the `kubelet.service` systemd unit file:
 
 ```
-worker-1$ cat <<EOF | sudo tee /etc/systemd/system/kubelet.service
+192.168.1.23$ cat <<EOF | sudo tee /etc/systemd/system/kubelet.service
 [Unit]
 Description=Kubernetes Kubelet
 Documentation=https://github.com/kubernetes/kubernetes
@@ -189,13 +189,13 @@ EOF
 ### Configure the Kubernetes Proxy
 
 ```
-worker-1$ sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
+192.168.1.23$ sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
 ```
 
 Create the `kube-proxy-config.yaml` configuration file:
 
 ```
-worker-1$ cat <<EOF | sudo tee /var/lib/kube-proxy/kube-proxy-config.yaml
+192.168.1.23$ cat <<EOF | sudo tee /var/lib/kube-proxy/kube-proxy-config.yaml
 kind: KubeProxyConfiguration
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 clientConnection:
@@ -208,7 +208,7 @@ EOF
 Create the `kube-proxy.service` systemd unit file:
 
 ```
-worker-1$ cat <<EOF | sudo tee /etc/systemd/system/kube-proxy.service
+192.168.1.23$ cat <<EOF | sudo tee /etc/systemd/system/kube-proxy.service
 [Unit]
 Description=Kubernetes Kube Proxy
 Documentation=https://github.com/kubernetes/kubernetes
@@ -234,7 +234,7 @@ EOF
 }
 ```
 
-> Remember to run the above commands on worker node: `worker-1`
+> Remember to run the above commands on worker node: `192.168.1.23`
 
 ## Verification
 
@@ -242,14 +242,14 @@ EOF
 List the registered Kubernetes nodes from the master node:
 
 ```
-master-1$ kubectl get nodes --kubeconfig admin.kubeconfig
+master-1$ kubectl get nodes
 ```
 
 > output
 
 ```
 NAME       STATUS     ROLES    AGE   VERSION
-worker-1   NotReady   <none>   93s   v1.13.0
+kube-worker0   NotReady   <none>   93s   v1.13.0
 ```
 
 > Note: It is OK for the worker node to be in a NotReady state.

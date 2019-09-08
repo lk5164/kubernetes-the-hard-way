@@ -91,8 +91,8 @@ PORT_NUMBER=$(kubectl get svc -l app=nginx -o jsonpath="{.items[0].spec.ports[0]
 Test to view NGINX page
 
 ```
-curl http://worker-1:$PORT_NUMBER
-curl http://worker-2:$PORT_NUMBER
+curl http://kube-worker0:$PORT_NUMBER
+curl http://kube-worker1:$PORT_NUMBER
 ```
 
 > output
