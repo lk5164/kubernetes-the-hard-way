@@ -66,7 +66,56 @@ admin.key
 admin.crt
 ```
 
-The admin.crt and admin.key file gives you administrative access. We will configure these to be used with the kubectl tool to perform administrative functions on kubernetes.
+## The Admin Kubernetes Configuration File
+The admin.crt and admin.key file gives you administrative access. We are configuring these to be used with the kubectl tool to perform administrative functions on kubernetes.
+
+Each kubeconfig requires a Kubernetes API Server to connect to. To support high availability the IP address assigned to the external load balancer fronting the Kubernetes API Servers will be used.
+
+Generate a kubeconfig file suitable for authenticating as the `admin` user:
+
+```
+{
+  KUBERNETES_LB_ADDRESS=192.168.1.24
+
+  kubectl config set-cluster kubernetes-the-hard-way \
+    --certificate-authority=ca.crt \
+    --embed-certs=true \
+    --server=https://${KUBERNETES_LB_ADDRESS}:6443
+
+  kubectl config set-credentials admin \
+    --client-certificate=admin.crt \
+    --client-key=admin.key
+
+  kubectl config set-context kubernetes-the-hard-way \
+    --cluster=kubernetes-the-hard-way \
+    --user=admin
+
+  kubectl config use-context kubernetes-the-hard-way
+}
+```
+
+## Verification
+
+Check the health of the remote Kubernetes cluster:
+
+```
+kubectl version
+```
+
+```
+Client Version: version.Info{Major:"1", Minor:"13", GitVersion:"v1.13.0", GitCommit:"ddf47ac13c1a9483ea035a79cd7c10005ff21a6d", GitTreeState:"clean", BuildDate:"2018-12-03T21:04:45Z", GoVersion:"go1.11.2", Compiler:"gc", Platform:"linux/amd64"}
+Client Version: version.Info{Major:"1", Minor:"13", GitVersion:"v1.13.0", GitCommit:"ddf47ac13c1a9483ea035a79cd7c10005ff21a6d", GitTreeState:"clean", BuildDate:"2018-12-03T21:04:45Z", GoVersion:"go1.11.2", Compiler:"gc", Platform:"linux/amd64"}
+```
+
+## Distribute Admin Config Files To All Nodes
+
+```
+for instance in `cat controllers && cat workers`
+do
+echo ">>> ${instance}"
+scp admin.kubeconfig ${instance}:~/.kube/config
+done
+```
 
 ### The Kubelet Client Certificates
 
@@ -113,8 +162,6 @@ kube-proxy.crt
 
 Generate the `kube-scheduler` client certificate and private key:
 
-
-
 ```
 openssl genrsa -out kube-scheduler.key 2048
 openssl req -new -key kube-scheduler.key -subj "/CN=system:kube-scheduler" -out kube-scheduler.csr
@@ -150,9 +197,9 @@ DNS.2 = kubernetes.default
 DNS.3 = kubernetes.default.svc
 DNS.4 = kubernetes.default.svc.cluster.local
 IP.1 = 10.96.0.1
-IP.2 = 192.168.5.11
-IP.3 = 192.168.5.12
-IP.4 = 192.168.5.30
+IP.2 = 192.168.1.25
+IP.3 = 192.168.1.17
+IP.4 = 192.168.1.24
 IP.5 = 127.0.0.1
 EOF
 ```
@@ -189,9 +236,11 @@ basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName = @alt_names
 [alt_names]
-IP.1 = 192.168.5.11
-IP.2 = 192.168.5.12
-IP.3 = 127.0.0.1
+IP.1 = 192.168.1.25
+IP.2 = 192.168.1.17
+IP.3 = 192.168.1.24
+IP.4 = 10.96.0.1
+IP.5 = 127.0.0.1
 EOF
 ```
 
@@ -235,7 +284,7 @@ service-account.crt
 Copy the appropriate certificates and private keys to each controller instance:
 
 ```
-for instance in master-1 master-2; do
+for instance in `cat controllers`; do
   scp ca.crt ca.key kube-apiserver.key kube-apiserver.crt \
     service-account.key service-account.crt \
     etcd-server.key etcd-server.crt \
