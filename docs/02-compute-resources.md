@@ -6,19 +6,19 @@
  <th>Name</th><th>	IP address</th><th>Role</th>
  </tr>
  <tr>
-  <td>haproxy</td><td>192.168.1.24</td><td>Load Balancer</td>
+  <td>kube-haproxy</td><td>192.168.1.24</td><td>Load Balancer</td>
  </tr>
  <tr>
-  <td>controller0</td><td>192.168.1.25</td><td>controller node</td>
+  <td>kube-controller0</td><td>192.168.1.25</td><td>controller node</td>
  </tr>
  <tr>
-  <td>controller1</td><td>192.168.1.17</td><td>controller node</td>
+  <td>kube-controller1</td><td>192.168.1.17</td><td>controller node</td>
  </tr>
  <tr>
-  <td>worker0</td><td>192.168.1.23</td><td>worker node</td>
+  <td>kube-worker0</td><td>192.168.1.23</td><td>worker node</td>
  </tr>
  <tr>
-  <td>worker1</td><td>192.168.1.18</td><td>worker node</td>
+  <td>kube-worker1</td><td>192.168.1.18</td><td>worker node</td>
  </tr>
 </table>
 
@@ -30,6 +30,16 @@
 
 ## SSH to the nodes
 
+    $: ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
+    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+Copy config file to .ssh folder. 
+    
+    cp ssh_config ~/.ssh/
+
+Copying keys to slave machines is not required step. However when you execute start-dfs.sh or start-yarn.sh command, you need to manually input password. There are various way of copying public keys to other machine. I am using ssh-copy-id command, 
+  
+    ssh-copy-id [username]@[ip]
 
 ## Verify Environment
 
