@@ -111,4 +111,22 @@ sudo ETCDCTL_API=3 etcdctl member list \
 f6f35cbe3961d862, started, 192.168.1.17, https://192.168.1.17:2380, https://192.168.1.17:2379
 ```
 
+List endpoints status
+
+```
+sudo ETCDCTL_API=3 etcdctl -w table \
+  --endpoints=https://127.0.0.1:2379 \
+  --cacert=/etc/etcd/ca.crt \
+  --cert=/etc/etcd/etcd-server.crt \
+  --key=/etc/etcd/etcd-server.key
+endpoint status
+```
+
+> output
+
+```
+```
+## Trouble Shooting
+If you didn't config ~/.kube/config, you may encounter error when you try the `etcdctl member list`. But if you just run `sudo ETCDCTL_API=3 etcdctl member list`, the error will go away. However, I would recommend configure ~/.kube/config first. 
+
 Next: [Bootstrapping the Kubernetes Control Plane](08-bootstrapping-kubernetes-controllers.md)
