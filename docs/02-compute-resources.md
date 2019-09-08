@@ -22,7 +22,7 @@
  </tr>
 </table>
 
-If you don't have DNS, edit /etc/hosts file on each VM machines with the hosts' information. 
+If you don't have DNS, edit `/etc/hosts` file on each VM machines with the hosts' information. 
 
 - Install's Docker on Worker nodes
 - Runs the below command on all nodes to allow for network forwarding in IP Tables.
