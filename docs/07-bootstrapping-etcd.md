@@ -125,6 +125,11 @@ endpoint status
 > output
 
 ```
++----------------+------------------+---------+---------+-----------+-----------+------------+
+|    ENDPOINT    |        ID        | VERSION | DB SIZE | IS LEADER | RAFT TERM | RAFT INDEX |
++----------------+------------------+---------+---------+-----------+-----------+------------+
+| 127.0.0.1:2379 | 7323693c5870702a |   3.3.9 |  4.3 MB |      true |     15300 |     363892 |
++----------------+------------------+---------+---------+-----------+-----------+------------+
 ```
 ## Trouble Shooting
 If you didn't config ~/.kube/config, you may encounter error when you try the `etcdctl member list`. But if you just run `sudo ETCDCTL_API=3 etcdctl member list`, the error will go away. However, I would recommend configure ~/.kube/config first. 
