@@ -242,7 +242,7 @@ EOF
 List the registered Kubernetes nodes from the master node:
 
 ```
-master-1$ kubectl get nodes
+192.168.1.23$ kubectl get nodes
 ```
 
 > output
