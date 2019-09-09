@@ -46,3 +46,5 @@ Kubernetes The Hard Way guides you through bootstrapping a highly available Kube
 * [Deploying the DNS Cluster Add-on](docs/14-dns-addon.md)
 * [Smoke Test](docs/15-smoke-test.md)
 * [Extra - Dynamic Kubelet Configuration](docs/17-extra-dynamic-kubelet-configuration.md)
+* [Deploying the Dashboard Add-on](docs/18-dashboard-addon.md)
+* [Cleaning Up](docs/cleaning-up.md)
