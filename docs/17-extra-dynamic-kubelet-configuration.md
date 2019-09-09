@@ -45,3 +45,4 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
+Next: [Deploying the Dashboard Add-on](docs/18-dashboard-addon.md)
