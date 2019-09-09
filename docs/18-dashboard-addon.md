@@ -103,3 +103,6 @@ Results
 ```
 dashboard.kubeconfig
 ```
+Select the file in your browser,
+
+![main](https://raw.githubusercontent.com/lk5164/kubernetes-the-hard-way/master/images/dashboard-main.PNG)
