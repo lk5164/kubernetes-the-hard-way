@@ -66,7 +66,7 @@ https://192.168.1.23:30771
 ```
 After accept risks, you may get following result on screen,
 
-[]
+![kube-dashboard](https://raw.githubusercontent.com/lk5164/kubernetes-the-hard-way/master/docs/images/kube-dashboard.PNG)
 
 ## Generate Token And Kubeconfig File
 ```
