@@ -13,7 +13,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.
 ## Edit Configuration File
 
 ```
-cat <<EOF | vim dashboard-service.yaml
+cat > dashboard-service.yaml <<EOF
 kind: Service
 apiVersion: v1
 metadata:
