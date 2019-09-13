@@ -48,3 +48,4 @@ Kubernetes The Hard Way guides you through bootstrapping a highly available Kube
 * [Extra - Dynamic Kubelet Configuration](docs/17-extra-dynamic-kubelet-configuration.md)
 * [Deploying the Dashboard Add-on](docs/18-dashboard-addon.md)
 * [Cleaning Up](docs/cleaning-up.md)
+* [Troubleshooting](docs/troubleshooting.md)
