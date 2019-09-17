@@ -37,4 +37,54 @@ weave-net-58j2j   2/2     Running   0          89s
 weave-net-rr5dk   2/2     Running   0          89s
 ```
 
+### Verify Pod Communication
+
+```
+for instance in `cat workers`
+do
+echo ">>> ${node_ip}"
+ssh ${node_ip} "ip addr show weave|grep -w inet"
+done
+>>> 192.168.1.23
+    inet 10.96.0.1/24 brd 10.96.0.255 scope global weave
+>>> 192.168.1.18
+    inet 10.96.0.128/24 brd 10.96.0.255 scope global weave
+```
+ssh to all nodes and ping weave ip
+
+```
+for instance in `cat workers`
+do
+echo ">>> ${node_ip}"
+ssh ${node_ip} "ping -c 1 10.96.0.1"
+ssh ${node_ip} "ping -c 1 10.96.0.128"
+done
+>>> 192.168.1.23
+PING 10.96.0.1 (10.96.0.1) 56(84) bytes of data.
+64 bytes from 10.96.0.1: icmp_seq=1 ttl=64 time=0.033 ms
+
+--- 10.96.0.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.033/0.033/0.033/0.000 ms
+PING 10.96.0.128 (10.96.0.128) 56(84) bytes of data.
+64 bytes from 10.96.0.128: icmp_seq=1 ttl=64 time=1.03 ms
+
+--- 10.96.0.128 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 1.039/1.039/1.039/0.000 ms
+>>> 192.168.1.18
+PING 10.96.0.1 (10.96.0.1) 56(84) bytes of data.
+64 bytes from 10.96.0.1: icmp_seq=1 ttl=64 time=0.250 ms
+
+--- 10.96.0.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.250/0.250/0.250/0.000 ms
+PING 10.96.0.128 (10.96.0.128) 56(84) bytes of data.
+64 bytes from 10.96.0.128: icmp_seq=1 ttl=64 time=0.034 ms
+
+--- 10.96.0.128 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.034/0.034/0.034/0.000 ms
+```
+
 Next: [Kube API Server to Kubelet Connectivity](13-kube-apiserver-to-kubelet.md)
