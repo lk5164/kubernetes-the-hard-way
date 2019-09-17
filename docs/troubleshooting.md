@@ -11,3 +11,7 @@ Usually, the log includes information about errors and which component generates
 ```
 sudo systemctl status <component name>
 ```
+## Pod troubleshooting
+```
+kubectl logs <pod-name> -c <init-container-2>
+```
