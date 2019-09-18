@@ -56,6 +56,27 @@ NAME                      READY   STATUS    RESTARTS   AGE
 busybox-bd8fb7cbd-vflm9   1/1     Running   0          10s
 ```
 
+Inspect the dns pod and get its internal IP
+```
+kubectl describe pod coredns-699f8ddd77-94qv9
+```
+
+> output
+
+```
+...
+```
+
+Modify the nameserver address for `busybox`
+
+```
+kubectl exec -it busybix bash
+#cat > /etc/resolv.conf <<<EOF
+nameserver 10.96.0.53
+EOF
+```
+
+
 Execute a DNS lookup for the `kubernetes` service inside the `busybox` pod:
 
 ```
