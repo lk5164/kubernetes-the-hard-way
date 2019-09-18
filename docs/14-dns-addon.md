@@ -86,8 +86,8 @@ kubectl exec -ti busybox -- nslookup kubernetes
 > output
 
 ```
-Server:    10.96.0.10
-Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+Server:    10.96.0.53
+Address 1: 10.96.0.53 kube-dns.kube-system.svc.cluster.local
 
 Name:      kubernetes
 Address 1: 10.96.0.1 kubernetes.default.svc.cluster.local
