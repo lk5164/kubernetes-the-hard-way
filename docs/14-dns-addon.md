@@ -64,7 +64,7 @@ kubectl describe pod coredns-699f8ddd77-94qv9
 > output
 
 ```
-...
+IP:                 10.96.0.132
 ```
 
 Modify the nameserver address for `busybox`
