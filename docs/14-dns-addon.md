@@ -70,7 +70,7 @@ IP:                 10.96.0.132
 Modify the nameserver address for `busybox`
 
 ```
-kubectl exec -it busybix bash
+kubectl exec -it busybox sh
 #cat > /etc/resolv.conf <<<EOF
 nameserver 10.96.0.53
 EOF
