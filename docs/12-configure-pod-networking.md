@@ -40,7 +40,7 @@ weave-net-rr5dk   2/2     Running   0          89s
 ### Verify Pod Communication
 
 ```
-for instance in `cat workers`
+for node_ip in `cat workers`
 do
 echo ">>> ${node_ip}"
 ssh ${node_ip} "ip addr show weave|grep -w inet"
@@ -53,7 +53,7 @@ done
 ssh to all nodes and ping weave ip
 
 ```
-for instance in `cat workers`
+for node_ip in `cat workers`
 do
 echo ">>> ${node_ip}"
 ssh ${node_ip} "ping -c 1 10.96.0.1"
