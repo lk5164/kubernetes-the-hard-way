@@ -166,7 +166,7 @@ kubernetes-jenkins-agent   ClusterIP   10.96.0.238   <none>        50000/TCP    
 Now open your browser and visit jenkins dashboard with the node IP address.
 
 ![jenkins screenshot](https://raw.githubusercontent.com/lk5164/kubernetes-the-hard-way/master/images/jenkins-login.PNG)
-## Troubleshotting
+## Troubleshooting
 If deploying jenkins is not successful. redeploy with `helm upgrade`.
 ```
 helm upgrade -n kube stable/jenkins -f jenkins-values.yaml --wait
