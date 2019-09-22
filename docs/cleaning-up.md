@@ -42,3 +42,5 @@ for instance in `cat workers && cat controllers`; do
   ip link del weave
 done
 ```
+Next: [Troubleshooting](troubleshooting.md)
+
