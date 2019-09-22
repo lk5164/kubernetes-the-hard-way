@@ -42,5 +42,5 @@ for instance in `cat workers && cat controllers`; do
   ip link del weave
 done
 ```
-Next: [Setting Up Jenkins On Kubernetes](deploy-jenkins.md)
+Next: [Troubleshooting](troubleshooting.md)
 
