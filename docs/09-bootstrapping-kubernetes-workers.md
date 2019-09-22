@@ -303,5 +303,14 @@ Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.041885   21406 c
 Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.141892   21406 controller_utils.go:1034] Caches are synced for service config controller
 Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.142043   21406 controller_utils.go:1034] Caches are synced for endpoints config controller
 ```
+Notice kube-proxy has error of "Error removing iptables rules in ipvs proxier: error deleting chain "KUBE-MARK-MASQ": exit status 1: iptables: Too many links." If you want to get rid of it. You can manually clear iptables `sudo iptables -F && sudo iptables -X && sudo iptables -F -t nat && sudo iptables -X -t nat`. Then restart kube-proxy
+```
+{
+  sudo systemctl daemon-reload
+  sudo systemctl enable kube-proxy
+  sudo systemctl restart kube-proxy
+}
+```
+Using systemctl to check service status is critical. You need to make sure there is no error in the log. Sometimes, even the service status is available, there are still problems that causes fatal error.
 
 Next: [TLS Bootstrapping Kubernetes Workers](10-tls-bootstrapping-kubernetes-workers.md)
