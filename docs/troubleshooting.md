@@ -15,3 +15,5 @@ sudo systemctl status <component name>
 ```
 kubectl logs <pod-name> -c <init-container-2>
 ```
+## Service troubleshooting
+[Debug Services](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)
