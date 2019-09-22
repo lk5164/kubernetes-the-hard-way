@@ -254,5 +254,54 @@ kube-worker0   NotReady   <none>   93s   v1.13.0
 
 > Note: It is OK for the worker node to be in a NotReady state.
   That is because we haven't configured Networking yet.
+  
+```
+sudo systemctl status kubelet
+```
+```
+● kubelet.service - Kubernetes Kubelet
+   Loaded: loaded (/etc/systemd/system/kubelet.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2019-09-22 16:54:51 EDT; 5s ago
+     Docs: https://github.com/kubernetes/kubernetes
+ Main PID: 5744 (kubelet)
+    Tasks: 12 (limit: 4675)
+   CGroup: /system.slice/kubelet.service
+           └─5744 /usr/local/bin/kubelet --config=/var/lib/kubelet/kubelet-config.yaml --image-pull-progress-deadline=2m --kubeconfig=/var/lib/kubelet/kubeconfig --tls-cert-file=/var/lib/kubelet/hadoop-slave2.crt --tls-private-key-file=/var/lib/kubelet/hadoop-slave2.key --network-plugin=cni --register-node=true --v=2
+
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983657    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "weave-net-token-pfrh6" (UniqueName: "kubernetes.io/secret/e07b5332-dbe8-11e9-b501-00505681a1ee-weave-net-token-pfrh6") pod "weave-net-7488l" (UID: "e07b5332-dbe8-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983794    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "tiller-token-tcg4k" (UniqueName: "kubernetes.io/secret/5b03cd2f-d979-11e9-86c8-00505681a1ee-tiller-token-tcg4k") pod "tiller-deploy-6d65d78679-ppsrq" (UID: "5b03cd2f-d979-11e9-86c8-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983811    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "weavedb" (UniqueName: "kubernetes.io/host-path/e07b5332-dbe8-11e9-b501-00505681a1ee-weavedb") pod "weave-net-7488l" (UID: "e07b5332-dbe8-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983823    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "cni-bin" (UniqueName: "kubernetes.io/host-path/e07b5332-dbe8-11e9-b501-00505681a1ee-cni-bin") pod "weave-net-7488l" (UID: "e07b5332-dbe8-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983835    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "cni-bin2" (UniqueName: "kubernetes.io/host-path/e07b5332-dbe8-11e9-b501-00505681a1ee-cni-bin2") pod "weave-net-7488l" (UID: "e07b5332-dbe8-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983846    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "dbus" (UniqueName: "kubernetes.io/host-path/e07b5332-dbe8-11e9-b501-00505681a1ee-dbus") pod "weave-net-7488l" (UID: "e07b5332-dbe8-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983867    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "lib-modules" (UniqueName: "kubernetes.io/host-path/e07b5332-dbe8-11e9-b501-00505681a1ee-lib-modules") pod "weave-net-7488l" (UID: "e07b5332-dbe8-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983970    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "config-volume" (UniqueName: "kubernetes.io/configmap/72260a98-dbe9-11e9-b501-00505681a1ee-config-volume") pod "coredns-69cbb76ff8-tjwbx" (UID: "72260a98-dbe9-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.983985    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "cni-conf" (UniqueName: "kubernetes.io/host-path/e07b5332-dbe8-11e9-b501-00505681a1ee-cni-conf") pod "weave-net-7488l" (UID: "e07b5332-dbe8-11e9-b501-00505681a1ee")
+Sep 22 16:54:54 hadoop-slave2 kubelet[5744]: I0922 16:54:54.984097    5744 operation_generator.go:567] MountVolume.SetUp succeeded for volume "coredns-token-xzt8h" (UniqueName: "kubernetes.io/secret/72260a98-dbe9-11e9-b501-00505681a1ee-coredns-token-xzt8h") pod "coredns-69cbb76ff8-tjwbx" (UID: "72260a98-dbe9-11e9-b501-00505681a1ee")
+```
+```
+sudo systemctl status kube-proxy
+```
+```
+● kube-proxy.service - Kubernetes Kube Proxy
+   Loaded: loaded (/etc/systemd/system/kube-proxy.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2019-09-22 13:13:49 EDT; 3h 39min ago
+     Docs: https://github.com/kubernetes/kubernetes
+ Main PID: 21406 (kube-proxy)
+    Tasks: 0 (limit: 4675)
+   CGroup: /system.slice/kube-proxy.service
+           └─21406 /usr/local/bin/kube-proxy --config=/var/lib/kube-proxy/kube-proxy-config.yaml
+
+Sep 22 13:13:49 hadoop-slave2 kube-proxy[21406]: I0922 13:13:49.911229   21406 server_others.go:178] Tearing down inactive rules.
+Sep 22 13:13:49 hadoop-slave2 kube-proxy[21406]: E0922 13:13:49.958694   21406 proxier.go:583] Error removing iptables rules in ipvs proxier: error deleting chain "KUBE-MARK-MASQ": exit status 1: iptables: Too many links.
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.038555   21406 server.go:555] Version: v1.14.0
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.041354   21406 conntrack.go:52] Setting nf_conntrack_max to 131072
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.041763   21406 config.go:202] Starting service config controller
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.041774   21406 controller_utils.go:1027] Waiting for caches to sync for service config controller
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.041876   21406 config.go:102] Starting endpoints config controller
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.041885   21406 controller_utils.go:1027] Waiting for caches to sync for endpoints config controller
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.141892   21406 controller_utils.go:1034] Caches are synced for service config controller
+Sep 22 13:13:50 hadoop-slave2 kube-proxy[21406]: I0922 13:13:50.142043   21406 controller_utils.go:1034] Caches are synced for endpoints config controller
+```
 
 Next: [TLS Bootstrapping Kubernetes Workers](10-tls-bootstrapping-kubernetes-workers.md)
