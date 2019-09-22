@@ -164,7 +164,8 @@ kubernetes-jenkins         NodePort    10.96.0.26    <none>        8080:30000/TC
 kubernetes-jenkins-agent   ClusterIP   10.96.0.238   <none>        50000/TCP        57m
 ```
 Now open your browser and visit jenkins dashboard with the node IP address.
-![tmux screenshot]()
+
+![jenkins screenshot](https://raw.githubusercontent.com/lk5164/kubernetes-the-hard-way/master/images/jenkins-login.PNG)
 ## Troubleshotting
 If deploying jenkins is not successful. redeploy with `helm upgrade`.
 ```
