@@ -17,3 +17,6 @@ kubectl logs <pod-name> -c <init-container-2>
 ```
 ## Service troubleshooting
 [Debug Services](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)
+
+## Jenkins troubleshooting
+[Setting Up Jenkins On Kubernetes](deploy-jenkins.md#Troubleshooting)
