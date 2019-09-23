@@ -3,6 +3,10 @@
 ```
 openssl x509 -noout -text -in <cert name>
 ```
+## Viewing Kubeconfig Content
+```
+kubectl config view --kube-config=<kube filename>
+```
 ## Checking Recent Logs
 ```
 journalctl -xe
