@@ -171,3 +171,14 @@ If deploying jenkins is not successful. redeploy with `helm upgrade`.
 ```
 helm upgrade -n kube stable/jenkins -f jenkins-values.yaml --wait
 ```
+If jenkins pod is not running, check the log.
+```
+kubectl logs kubernetes-jenkins-5ff54c7c88-sgvzg -c jenkins
+```
+If you don't have DNS in your cluster or DNS setting up is not correct, helm plugins will not be able to install. You may find following information in the log.
+```
+Downloading plugins...
+...
+16:28:13 Failure (28) Retrying in 1 seconds...
+```
+You can check if your dns is running or follow the steps to [debug service](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)
