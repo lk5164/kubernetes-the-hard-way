@@ -15,12 +15,12 @@ Usually, the log includes information about errors and which component generates
 ```
 sudo systemctl status <component name>
 ```
-## Pod troubleshooting
+## Pod Troubleshooting
 ```
 kubectl logs <pod-name> -c <init-container-2>
 ```
-## Service troubleshooting
+## Service Troubleshooting
 [Debug Services](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-service/)
 
-## Jenkins troubleshooting
+## Jenkins Troubleshooting
 [Setting Up Jenkins On Kubernetes](deploy-jenkins.md#Troubleshooting)
